@@ -1,0 +1,79 @@
+# Node modules
+/node_modules/
+
+# Build output
+/dist/
+/build/
+/out/
+/public/build/
+
+# Vite cache
+/.vite
+node_modules/.vite
+
+# Local env files (keep .env.example committed)
+.env
+.env.*.local
+.env.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+*.log
+logs/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor/IDE
+.vscode/
+.idea/
+*.sublime-workspace
+
+# TypeScript
+*.tsbuildinfo
+
+# Test coverage
+/coverage/
+/.nyc_output/
+
+# Jest / vitest caches
+/jest-cache/
+/vitest-cache/
+
+# ESLint / stylelint cache
+.eslintcache
+.stylelintcache
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.swp
+
+# Misc caches and outputs
+.cache/
+.cache-loader/
+.sass-cache/
+parcel-cache/
+dist-ssr/
+
+# pnpm
+.pnp.*
+.pnpm-store/
+
+# Storybook and docs build
+.storybook/build/
+
+# lockfile local directories (some setups)
+.yarn/*
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+
+# Keep examples and
