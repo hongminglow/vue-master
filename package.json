@@ -9,9 +9,11 @@
 	},
 	"dependencies": {
 		"@tailwindcss/postcss": "^4.1.11",
+		"@tanstack/vue-form": "^1.19.2",
 		"pinia": "^2.1.0",
 		"vue": "^3.4.0",
-		"vue-router": "^4.2.0"
+		"vue-router": "^4.2.0",
+		"zod": "^4.0.17"
 	},
 	"devDependencies": {
 		"@types/node": "^20.0.0",
