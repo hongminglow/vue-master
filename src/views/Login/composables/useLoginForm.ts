@@ -21,8 +21,8 @@ export function useLoginForm(
 ) {
   return useFormFactory<LoginFormData>({
     defaultValues: {
-      email: "",
-      password: "",
+      email: "admin@example.com",
+      password: "Password1!",
     },
     validationSchema: loginSchema,
     onSubmit,
