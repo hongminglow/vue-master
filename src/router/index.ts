@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import type { RouteRecordRaw } from "vue-router";
 import Login from "@/views/Login/Login.vue";
-import Home from "@/views/Home.vue";
+import Home from "@/views/Home/Home.vue";
 
 // Define routes - similar to React Router routes but different syntax
 const routes: RouteRecordRaw[] = [

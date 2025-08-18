@@ -72,6 +72,8 @@
 					</div>
 				</div>
 			</div>
+
+			<ExperimentLab :count="counter" />
 		</main>
 	</div>
 </template>
@@ -82,6 +84,7 @@ import { ref, computed, onMounted, watch, watchEffect, watchPostEffect, watchSyn
 import { useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
 import { once } from "events";
+import ExperimentLab from "./components/ExperimentLab.vue";
 
 // State - like useState in React
 const counter = ref(0);
