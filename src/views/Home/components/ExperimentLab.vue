@@ -9,6 +9,7 @@ import SimpleCard from "@/components/card/SimpleCard.vue";
 import { useExperimentProvider } from "@/views/Home/composables/useExperimentState";
 import ListItemTransition from "./ListItemTransition.vue";
 import DataFetcher from "./DataFetcher.vue";
+import ColorPicker from "@/components/picker/ColorPicker.vue";
 
 interface Props {
 	count: number;
@@ -70,6 +71,7 @@ watch(isClicked, (newValue) => {
 		class="px-6 py-3.5 bg-gray-50 shadow-md flex flex-col items-center space-y-3 justify-between border-4 border-dashed border-gray-200 rounded-lg"
 	>
 		<h1 class="text-4xl text-blue-700 font-bold">Vue Experiment Lab</h1>
+		<ColorPicker />
 		<Switch v-model="toogled" :class="['transition-colors', 'data-[state=checked]:bg-red-500']"> </Switch>
 		<p :class="['text-sm text-blue-500', toogled && 'text-red-500']">
 			{{ computedCount }}

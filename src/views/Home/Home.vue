@@ -71,20 +71,64 @@
 						</div>
 					</div>
 				</div>
-			</div>
 
-			<ExperimentLab :count="counter" />
+				<!-- Nested Route Navigation -->
+				<div class="mt-8">
+					<nav class="bg-white shadow rounded-lg">
+						<div class="px-6 py-4">
+							<div class="flex space-x-4">
+								<router-link
+									to="/home/experiment"
+									class="px-4 py-2 text-sm font-medium rounded-md transition-colors"
+									:class="
+										$route.name === 'ExperimentLab'
+											? 'bg-blue-100 text-blue-700'
+											: 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+									"
+								>
+									🧪 Experiment Lab
+								</router-link>
+								<router-link
+									to="/home/innerA"
+									class="px-4 py-2 text-sm font-medium rounded-md transition-colors"
+									:class="
+										$route.name === 'InnerA'
+											? 'bg-blue-100 text-blue-700'
+											: 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+									"
+								>
+									📝 Inner A
+								</router-link>
+								<router-link
+									to="/home/innerB"
+									class="px-4 py-2 text-sm font-medium rounded-md transition-colors"
+									:class="
+										$route.name === 'InnerB'
+											? 'bg-blue-100 text-blue-700'
+											: 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+									"
+								>
+									🎯 Inner B
+								</router-link>
+							</div>
+						</div>
+					</nav>
+
+					<!-- Nested Route Outlet - This is where child components will render -->
+					<div class="mt-6">
+						<router-view :counter="counter" />
+					</div>
+				</div>
+			</div>
 		</main>
 	</div>
 </template>
 
 <script setup lang="ts">
 // Vue 3 Composition API imports
-import { ref, computed, onMounted, watch, watchEffect, watchPostEffect, watchSyncEffect } from "vue";
+import { ref, computed, onMounted, watch } from "vue";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
-import { once } from "events";
-import ExperimentLab from "./components/ExperimentLab.vue";
 
 // State - like useState in React
 const counter = ref(0);
