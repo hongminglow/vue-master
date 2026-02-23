@@ -6,7 +6,7 @@
 /build/
 /out/
 /public/build/
-
+.agent/*
 # Vite cache
 /.vite
 node_modules/.vite

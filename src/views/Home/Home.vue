@@ -1,178 +1,125 @@
 <template>
-	<div class="min-h-screen bg-gray-50">
-		<!-- Navigation Header -->
-		<nav class="bg-white shadow">
-			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-				<div class="flex justify-between h-16">
-					<div class="flex items-center">
-						<h1 class="text-xl font-semibold text-gray-900">Vue Startup App</h1>
-					</div>
-					<div class="flex items-center space-x-4">
-						<!-- User info - Vue's template interpolation {{ }} is like React's {expression} -->
-						<span class="text-gray-700"> Welcome, {{ user?.name }} </span>
-						<button
-							@click="handleLogout"
-							class="bg-red-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-						>
-							Logout
-						</button>
-					</div>
-				</div>
-			</div>
-		</nav>
+  <div class="min-h-screen bg-slate-900 flex">
+    <!-- Sidebar -->
+    <aside
+      class="w-64 bg-[#0F172A] border-r border-slate-800 flex-col hidden md:flex h-screen sticky top-0"
+    >
+      <div class="h-16 flex items-center px-6 border-b border-slate-800">
+        <h1
+          class="text-xl font-bold text-white tracking-tight flex items-center gap-2"
+        >
+          <span class="text-green-500 text-2xl">⚡</span>
+          Vue <span class="font-light text-slate-400">Master</span>
+        </h1>
+      </div>
 
-		<!-- Main Content -->
-		<main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-			<div class="px-4 py-6 sm:px-0">
-				<div class="border-4 border-dashed border-gray-200 rounded-lg p-8">
-					<div class="text-center">
-						<h2 class="text-3xl font-extrabold text-gray-900 mb-4">🎉 Welcome to Vue!</h2>
-						<p class="text-lg text-gray-600 mb-8">
-							You've successfully created a Vue 3 + TypeScript + Tailwind application!
-						</p>
+      <div class="flex-1 overflow-y-auto py-4 px-3 space-y-3 scrollbar-hide">
+        <router-link
+          v-for="route in sidebarRoutes"
+          :key="route.path"
+          :to="route.path"
+          class="block px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200"
+          :class="
+            $route.path === route.path
+              ? 'bg-green-500/10 text-green-400'
+              : 'text-slate-400 hover:bg-slate-800 hover:text-white'
+          "
+        >
+          <span class="mr-2">{{ route.icon }}</span> {{ route.name }}
+        </router-link>
+      </div>
 
-						<!-- Stats Cards -->
-						<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-							<div v-for="stat in stats" :key="stat.name" class="bg-white overflow-hidden shadow rounded-lg">
-								<div class="p-5">
-									<div class="flex items-center">
-										<div class="flex-shrink-0">
-											<div class="text-2xl">{{ stat.icon }}</div>
-										</div>
-										<div class="ml-5 w-0 flex-1">
-											<dl>
-												<dt class="text-sm font-medium text-gray-500 truncate">
-													{{ stat.name }}
-												</dt>
-												<dd class="text-lg font-medium text-gray-900">
-													{{ stat.value }}
-												</dd>
-											</dl>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
+      <div class="p-4 border-t border-slate-800">
+        <button
+          @click="handleLogout"
+          class="w-full flex items-center justify-center px-4 py-2 text-sm font-medium text-slate-300 bg-slate-800 rounded-lg hover:bg-slate-700 hover:text-white transition-colors cursor-pointer"
+        >
+          Logout
+        </button>
+      </div>
+    </aside>
 
-						<!-- Action Buttons -->
-						<div class="space-x-4">
-							<button
-								@click="incrementCounter"
-								class="bg-indigo-600 text-white px-6 py-3 rounded-md text-lg font-medium hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-							>
-								Click Counter: {{ counter }}
-							</button>
-							<button
-								@click="showAlert"
-								class="bg-green-600 text-white px-6 py-3 rounded-md text-lg font-medium hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-							>
-								Show Alert
-							</button>
-						</div>
-					</div>
-				</div>
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col min-w-0">
+      <!-- Top Navigation (Mobile friendly & User info) -->
+      <header
+        class="h-16 bg-[#0F172A] border-b border-slate-800 flex items-center justify-between px-6 sticky top-0 z-10"
+      >
+        <div class="md:hidden font-bold text-white flex items-center gap-2">
+          <span class="text-green-500 text-2xl">⚡</span> Vue Master
+        </div>
+        <div class="hidden md:block"></div>
+        <div
+          class="flex items-center space-x-4 text-sm font-medium text-slate-400"
+        >
+          <span
+            >Hello,
+            <span class="text-white">{{
+              user?.name || "Developer"
+            }}</span></span
+          >
+        </div>
+      </header>
 
-				<!-- Nested Route Navigation -->
-				<div class="mt-8">
-					<nav class="bg-white shadow rounded-lg">
-						<div class="px-6 py-4">
-							<div class="flex space-x-4">
-								<router-link
-									to="/home/experiment"
-									class="px-4 py-2 text-sm font-medium rounded-md transition-colors"
-									:class="
-										$route.name === 'ExperimentLab'
-											? 'bg-blue-100 text-blue-700'
-											: 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-									"
-								>
-									🧪 Experiment Lab
-								</router-link>
-								<router-link
-									to="/home/innerA"
-									class="px-4 py-2 text-sm font-medium rounded-md transition-colors"
-									:class="
-										$route.name === 'InnerA'
-											? 'bg-blue-100 text-blue-700'
-											: 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-									"
-								>
-									📝 Inner A
-								</router-link>
-								<router-link
-									to="/home/innerB"
-									class="px-4 py-2 text-sm font-medium rounded-md transition-colors"
-									:class="
-										$route.name === 'InnerB'
-											? 'bg-blue-100 text-blue-700'
-											: 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-									"
-								>
-									🎯 Inner B
-								</router-link>
-							</div>
-						</div>
-					</nav>
+      <!-- Nested Route Outlet -->
+      <main class="flex-1 p-6 lg:p-10 overflow-auto relative">
+        <!-- Fancy Decor -->
+        <div
+          class="fixed right-0 top-0 w-[50vw] h-[50vw] rounded-full bg-slate-800/20 blur-[100px] pointer-events-none -z-10"
+        ></div>
 
-					<!-- Nested Route Outlet - This is where child components will render -->
-					<div class="mt-6">
-						<router-view :counter="counter" />
-					</div>
-				</div>
-			</div>
-		</main>
-	</div>
+        <router-view v-slot="{ Component }">
+          <transition name="fade" mode="out-in">
+            <component :is="Component" />
+          </transition>
+        </router-view>
+      </main>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
-// Vue 3 Composition API imports
-import { ref, computed, onMounted, watch } from "vue";
+import { computed, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
 
-// State - like useState in React
-const counter = ref(0);
-
-// Router and store
 const router = useRouter();
 const authStore = useAuthStore();
 
-// Computed property - like useMemo in React
 const user = computed(() => authStore.user);
 
-// Reactive data for the stats cards
-const stats = ref([
-	{ name: "Framework", value: "Vue 3", icon: "⚡" },
-	{ name: "Language", value: "TypeScript", icon: "📝" },
-	{ name: "Styling", value: "Tailwind CSS", icon: "🎨" },
-]);
-
-// Methods - similar to functions in React components
-const incrementCounter = () => {
-	counter.value++;
-};
-
-const showAlert = () => {
-	alert(`Hello ${user.value?.name}! You're using Vue 3 with TypeScript!`);
-};
-
 const handleLogout = () => {
-	authStore.logout();
-	router.push("/login");
+  authStore.logout();
+  router.push("/login");
 };
 
-watch(counter, (newVal, oldVal) => {
-	console.log(`new val..${newVal} -> old val..${oldVal}`);
-});
+// Define sidebar routes for learning modules
+const sidebarRoutes = [
+  { path: "/home/intro", name: "Introduction", icon: "🚀" },
+  { path: "/home/state", name: "State (useState)", icon: "📦" },
+  { path: "/home/global-state", name: "Global State (Zustand)", icon: "🌍" },
+  { path: "/home/effect", name: "Effects (useEffect)", icon: "🔄" },
+  { path: "/home/performance", name: "Performance (useMemo)", icon: "⚡" },
+  { path: "/home/form-validation", name: "Form (React Hook Form)", icon: "📝" },
+  { path: "/home/data-fetching", name: "Query (TanStack)", icon: "📡" },
+  { path: "/home/http-client", name: "HTTP Client (Axios)", icon: "🌐" },
+  { path: "/home/list-mapping", name: "List Mapping (.map)", icon: "📋" },
+  { path: "/home/event-handler", name: "Event Handler (onClick)", icon: "🎯" },
+  { path: "/home/context", name: "Provide/Inject (Context)", icon: "💉" },
+  { path: "/home/advanced", name: "Advanced (KeepAlive, etc.)", icon: "🔬" },
+];
 
-// Lifecycle hook - similar to useEffect in React
 onMounted(() => {
-	console.log("Home component mounted!");
-	authStore.initializeAuth();
+  authStore.initializeAuth();
 });
 </script>
 
 <style scoped>
-/* Component-scoped styles - only apply to this component */
-/* This is like CSS Modules in React */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
 </style>

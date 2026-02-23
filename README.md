@@ -80,13 +80,12 @@ vue-master/
 ```vue
 <!-- Vue -->
 <template>
-	<input v-model="message" />
-	<p>{{ message }}</p>
+  <input v-model="message" />
+  <p>{{ message }}</p>
 </template>
 
 <!-- React equivalent -->
-<input value={message} onChange={e => setMessage(e.target.value)} />
-<p>{message}</p>
+<input value="{message}" onChange="{e" ="" />
 ```
 
 ### Event Handling
@@ -142,9 +141,24 @@ const increment = () => count.value++;
 </script>
 
 <!-- React equivalent -->
-const [count, setCount] = useState(0) const doubleCount = useMemo(() => count * 2, [count]) const increment = () =>
-setCount(c => c + 1)
+const [count, setCount] = useState(0) const doubleCount = useMemo(() => count *
+2, [count]) const increment = () => setCount(c => c + 1)
 ```
+
+## 🧠 Interactive Modules Covered
+
+Our application covers essential development patterns with side-by-side interactive demos matching React behavior alongside Vue options & composition API:
+
+1. **Local State (`useState` vs `ref/reactive`)**
+2. **Global State Management (`Zustand` vs `Pinia`)**
+3. **Side Effects & Lifecycles (`useEffect` vs `watch/watchEffect`)**
+4. **Performance Optimization (`useMemo/useCallback` vs `computed`)**
+5. **Form Validation (React Hook Form + Zod vs Vue Form + Zod)**
+6. **Data Fetching (React Query vs TanStack Vue Query)**
+7. **HTTP Clients (Axios/Fetch vs VueUse `useFetch`)**
+8. **List Mapping (JSX `.map()` vs Template `v-for`)**
+9. **Event Handlers (Synthetic Events `onClick` vs `@click` with Modifiers)**
+10. **Advanced Vue Features (`KeepAlive`, `Transition`, `v-memo`, and Scoped Slots)**
 
 ## 🏗️ Project Structure Decisions
 

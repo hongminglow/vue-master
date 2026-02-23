@@ -65,8 +65,8 @@ const emit = defineEmits<Emits>();
 
 const inputClasses = computed(() => {
   const baseClasses = [
-    "relative block w-full px-3 py-2 border placeholder-gray-500 text-gray-900",
-    "focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10",
+    "relative block w-full px-4 py-2.5 border bg-slate-900 border-slate-700/80 placeholder-slate-500 text-slate-50",
+    "focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-green-500 transition-all",
     "disabled:opacity-50 disabled:cursor-not-allowed",
   ];
 
@@ -79,14 +79,14 @@ const inputClasses = computed(() => {
 
   // Variant classes
   const variantClasses = {
-    default: "rounded-md",
-    rounded: "rounded-md",
-    "rounded-top": "rounded-t-md rounded-none",
-    "rounded-bottom": "rounded-b-md rounded-none",
+    default: "rounded-lg",
+    rounded: "rounded-lg border-slate-700",
+    "rounded-top": "rounded-t-lg rounded-none",
+    "rounded-bottom": "rounded-b-lg rounded-none",
   };
 
   // Error state
-  const errorClasses = props.error ? "border-red-300" : "border-gray-300";
+  const errorClasses = props.error ? "border-red-500" : "border-slate-700";
 
   return [
     ...baseClasses,
@@ -98,7 +98,7 @@ const inputClasses = computed(() => {
 
 const labelClass = computed(() => {
   return props.variant === "default"
-    ? "block text-sm font-medium text-gray-700 mb-1"
+    ? "block text-sm font-medium text-slate-300 mb-1"
     : "sr-only";
 });
 
