@@ -38,6 +38,13 @@
 						>
 							Submit & Validate
 						</button>
+						<button
+							type="button"
+							@click="clearForm"
+							class="w-full py-3 bg-slate-700 hover:bg-slate-600 text-white rounded-lg font-bold shadow-md transition-colors cursor-pointer"
+						>
+							Clear Form
+						</button>
 					</form>
 				</div>
 			</template>
@@ -51,8 +58,8 @@
 					<li>
 						<strong class="text-green-400 block mb-1">📝 Native v-model Power</strong>
 						Because of Vue's native two-way binding (`v-model`), you often don't strictly *need* a massive form library
-						if you only want basic validation. You can simply bind inputs directly to a `reactive` object and test it
-						against a Zod schema upon submit!
+						if you only want basic validation. You can simply bind inputs directly to a `ref()` object and test its
+						`.value` against a Zod schema upon submit!
 					</li>
 					<li>
 						<strong class="text-green-400 block mb-1">🚀 Advanced Form Packages</strong>
@@ -60,6 +67,27 @@
 						extremely powerful packages mirroring React Hook Form. The two most prominent are `@tanstack/vue-form`
 						(headless, built by Tanner Linsley's team alongside the React version) and `vee-validate` (extremely mature,
 						Vue-specific form engine).
+					</li>
+					<li class="p-4 bg-slate-800/80 rounded-lg border-2 border-blue-500/30 mt-4">
+						<strong class="text-blue-400 block mb-2 text-lg">💡 Beginner's Golden Rule: Form State</strong>
+						<div class="space-y-3 text-slate-300">
+							<p>
+								<strong>Never use <code>reactive()</code> for form state! Always use <code>ref()</code>.</strong>
+							</p>
+							<p>
+								Why? Because forms almost always need to be <strong>cleared</strong> or <strong>reset</strong>. If you
+								build your form with <code>const formData = reactive({ user: '', pass: '' })</code>, you cannot do
+								<code>formData = {}</code> to clear the form. It will instantly destroy all reactivity and break your
+								UI.
+							</p>
+							<p>
+								If you build your form with <code>const formData = ref({ user: '', pass: '' })</code>, you can
+								completely reset the entire form back to a blank slate securely with a single line of code: <br /><code
+									class="text-blue-300 bg-slate-900 px-1 rounded"
+									>formData.value = { user: '', pass: '' }</code
+								>.
+							</p>
+						</div>
 					</li>
 				</ul>
 			</template>
@@ -69,7 +97,7 @@
 
 <script setup lang="ts">
 import ComparisonCard from "@/components/ComparisonCard.vue";
-import { reactive } from "vue";
+import { ref } from "vue";
 import { z } from "zod";
 
 const schema = z.object({
@@ -77,23 +105,29 @@ const schema = z.object({
 	password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
-const formData = reactive({
+const formData = ref({
 	username: "",
 	password: "",
 });
 
-const errors = reactive<Record<string, string>>({});
+const errors = ref<Record<string, string>>({});
+
+const clearForm = () => {
+	// Thanks to ref(), we can reset the entire state instantly!
+	formData.value = { username: "", password: "" };
+	errors.value = {};
+};
 
 const handleSubmit = () => {
 	// Clear previous errors
-	Object.keys(errors).forEach((key) => delete errors[key]);
+	errors.value = {};
 
-	const result = schema.safeParse(formData);
+	const result = schema.safeParse(formData.value);
 
 	if (!result.success) {
 		const fieldErrors = result.error.flatten().fieldErrors;
 		for (const [key, val] of Object.entries(fieldErrors)) {
-			if (val) errors[key] = val[0];
+			if (val) errors.value[key] = val[0];
 		}
 	} else {
 		alert("Form is perfectly valid! ✅\\n" + JSON.stringify(result.data, null, 2));
@@ -127,21 +161,29 @@ function App() {
 const vueSnippet = `<script setup>
 // using standard v-model with generic Zod, or use
 // @tanstack/vue-form / vee-validate for advanced field states!
-import { reactive } from 'vue';
+import { ref } from 'vue';
 import { z } from 'zod';
 
 const schema = z.object({
   username: z.string().min(3)
 });
 
-const formData = reactive({ username: '' });
-const errors = reactive({});
+const formData = ref({ username: '' });
+const errors = ref({});
 
 const onSubmit = () => {
-  const res = schema.safeParse(formData);
+  // Clear previous errors
+  errors.value = {};
+
+  const res = schema.safeParse(formData.value);
   if (!res.success) {
     // Map zod errors to our error object state
-    Object.assign(errors, res.error.flatten().fieldErrors);
+    Object.keys(res.error.flatten().fieldErrors).forEach(k => {
+      errors.value[k] = res.error.flatten().fieldErrors[k][0];
+    })
+  } else {
+    // Form is valid! Beautifully clear the form using ref:
+    formData.value = { username: '' };
   }
 };
 <\/script>
