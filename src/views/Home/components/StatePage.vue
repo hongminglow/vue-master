@@ -63,6 +63,29 @@
 						<strong>if you place a ref inside a reactive Array or Map, it does NOT unwrap!</strong>
 						You will still need to access it via <code>.value</code> (e.g., <code>arr[0].value</code>).
 					</li>
+					<li class="p-4 bg-slate-800/80 rounded-lg border-2 border-blue-500/30">
+						<strong class="text-blue-400 block mb-2 text-lg">💡 Beginner's Golden Rule: When to use which?</strong>
+						<div class="space-y-3 text-slate-300">
+							<p>
+								If you are confused, <strong>just use <code>ref()</code> for EVERYTHING.</strong> Period.
+							</p>
+							<p>
+								Wait, <b>can <code>ref()</code> be destructured?</b> No! Neither of them can be destructured safely. If
+								you do <code>const { name } = user</code> (reactive) OR <code>const { name } = myRef.value</code>, both
+								will give you a disconnected string. You
+								<strong class="text-rose-400">always need <code>toRefs()</code></strong>
+								when destructuring objects if you want to keep reactivity.
+							</p>
+							<p>
+								So why prefer <code>ref()</code>? Because <code>reactive()</code> has a massive reassignment flaw. You
+								<strong class="text-rose-400">cannot reassign it</strong> (e.g.,
+								<code>user = { name: 'New' }</code> instantly ruins reactivity). On the other hand,
+								<code>ref()</code> survives full reassignments effortlessly (e.g., <code>users.value = [...]</code>),
+								handles both primitives and objects, and seeing <code>.value</code> instantly reminds you "this is
+								reactive state!".
+							</p>
+						</div>
+					</li>
 				</ul>
 			</template>
 		</ComparisonCard>

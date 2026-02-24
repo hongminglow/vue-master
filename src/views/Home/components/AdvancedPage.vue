@@ -308,15 +308,26 @@
 					<div
 						class="bg-slate-900/50 rounded-lg p-4 font-mono text-sm border border-slate-700/80 shadow-inner overflow-x-auto leading-relaxed"
 					>
-						<span class="text-blue-300 font-medium">const</span>
-						<span class="text-slate-200">state = reactive({ count:</span>
-						<span class="text-green-300 font-medium">0</span> <span class="text-slate-200">});</span><br />
-						<span class="text-slate-400 italic">// ❌ Loses reactivity!</span><br />
-						<span class="text-blue-300 font-medium">let</span> <span class="text-slate-200">{ count } = state;</span
+						<span class="text-slate-400 italic">// ❌ Reactivity DESTROYED for both!</span><br />
+						<span class="text-blue-300 font-medium">const</span> <span class="text-slate-200">{ count } =</span>
+						<span class="text-green-300 font-medium">reactive</span><span class="text-slate-200">({ count: 0 });</span
+						><br />
+						<span class="text-blue-300 font-medium">const</span> <span class="text-slate-200">{ age } =</span>
+						<span class="text-green-300 font-medium">ref</span><span class="text-slate-200">({ age: 25 }).value;</span
 						><br /><br />
-						<span class="text-slate-400 italic">// ✅ Keeps reactivity intact</span><br />
-						<span class="text-blue-300 font-medium">let</span>
-						<span class="text-slate-200">{ count } = toRefs(state);</span>
+
+						<span class="text-slate-400 italic">// ✅ toRefs keeps reactivity intact by creating</span><br />
+						<span class="text-slate-400 italic">// individual ref() proxies for each property!</span><br />
+						<span class="text-blue-300 font-medium">const</span> <span class="text-slate-200">state =</span>
+						<span class="text-green-300 font-medium">reactive</span><span class="text-slate-200">({ count: 0 });</span
+						><br />
+						<span class="text-blue-300 font-medium">const</span> <span class="text-slate-200">{ count } =</span>
+						<span class="text-white font-bold">toRefs</span><span class="text-slate-200">(state);</span><br /><br />
+
+						<span class="text-blue-300 font-medium">const</span> <span class="text-slate-200">user =</span>
+						<span class="text-green-300 font-medium">ref</span><span class="text-slate-200">({ age: 25 });</span><br />
+						<span class="text-blue-300 font-medium">const</span> <span class="text-slate-200">{ age } =</span>
+						<span class="text-white font-bold">toRefs</span><span class="text-slate-200">(user.value);</span>
 					</div>
 				</div>
 
@@ -359,6 +370,25 @@
 							Increment Source +1
 						</button>
 					</div>
+				</div>
+			</div>
+
+			<div class="px-6 pb-6 pt-2">
+				<div class="p-4 bg-slate-800/80 rounded border-l-4 border-blue-500 shadow-inner space-y-2">
+					<h4 class="text-blue-400 font-bold tracking-wide">💡 When do we actually need to destructure?</h4>
+					<p class="text-sm text-slate-300 leading-relaxed">
+						If destructuring breaks reactivity so easily, why do it? Why not just write
+						<code>user.value.age</code> everywhere? <br /><br />
+						<strong>1. Composable Functions (Custom Hooks):</strong> In Vue, when you extract logic into a composable
+						like <code>useMouse()</code>, it often returns a completely reactive object: <code>return { x, y }</code>.
+						When you consume it in your component, you don't want to type `mouse.x`; you want to destructure it cleanly:
+						<code>const { x, y } = useMouse()</code>. That composable must return refs or use
+						<code>toRefs()</code> internally so the consumer doesn't break everything! <br /><br />
+						<strong>2. Vuex / Pinia Global Stores:</strong> When you pull a massive 100-property store into a tiny
+						component, you might only need exactly 2 variables. Doing
+						<code>const { username, isLoggedIn } = storeToRefs(authStore)</code> keeps your template incredibly super
+						clean instead of repeating `authStore.isLoggedIn` everywhere.
+					</p>
 				</div>
 			</div>
 		</div>
