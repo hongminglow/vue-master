@@ -7,6 +7,7 @@
 /out/
 /public/build/
 .agent/*
+.gemini/*
 # Vite cache
 /.vite
 node_modules/.vite
