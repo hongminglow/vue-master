@@ -47,7 +47,9 @@ vue-master/
 
 ### 4. **Reactivity**
 
-- **Vue**: Built-in reactivity system with `ref()` and `reactive()`
+- **Vue**: Built-in reactivity system with `ref()` and `reactive()`.
+  - _Gotcha:_ Destructuring a `reactive` object loses reactivity (use `toRefs()` instead).
+  - _Gotcha:_ `shallowRef` and `shallowReactive` do not track deep nested object mutations.
 - **React**: Manual re-renders with `useState()` and `useEffect()`
 
 ### 5. **Two-way Binding**
@@ -80,8 +82,8 @@ vue-master/
 ```vue
 <!-- Vue -->
 <template>
-  <input v-model="message" />
-  <p>{{ message }}</p>
+	<input v-model="message" />
+	<p>{{ message }}</p>
 </template>
 
 <!-- React equivalent -->
@@ -141,8 +143,8 @@ const increment = () => count.value++;
 </script>
 
 <!-- React equivalent -->
-const [count, setCount] = useState(0) const doubleCount = useMemo(() => count *
-2, [count]) const increment = () => setCount(c => c + 1)
+const [count, setCount] = useState(0) const doubleCount = useMemo(() => count * 2, [count]) const increment = () =>
+setCount(c => c + 1)
 ```
 
 ## 🧠 Interactive Modules Covered
