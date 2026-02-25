@@ -1,6 +1,8 @@
-# Vue 3 + TypeScript + Tailwind Startup App
+# ⚡ Vue Master: The React Developer's Guide to Vue 3
 
-This is a simple startup application built with Vue 3, TypeScript, and Tailwind CSS, featuring a login page and home page.
+Welcome to **Vue Master**! This application is a fully interactive learning platform explicitly designed for **React developers transitioning to Vue 3**.
+
+Instead of reading dry documentation, this platform showcases side-by-side syntactic comparisons of fundamental React concepts (like `useState`, `useEffect`, and `Context`) mapped directly to their ideal modern Vue 3 Composition API equivalents.
 
 ## 📁 Folder Structure Explained
 
@@ -159,8 +161,10 @@ Our application covers essential development patterns with side-by-side interact
 6. **Data Fetching (React Query vs TanStack Vue Query)**
 7. **HTTP Clients (Axios/Fetch vs VueUse `useFetch`)**
 8. **List Mapping (JSX `.map()` vs Template `v-for`)**
-9. **Event Handlers (Synthetic Events `onClick` vs `@click` with Modifiers)**
-10. **Advanced Vue Features (`KeepAlive`, `Transition`, `v-memo`, and Scoped Slots)**
+9. **Conditional Rendering (Ternaries `? :` vs `v-if/v-show`)**
+10. **Event Handlers (Synthetic Events `onClick` vs `@click` with Modifiers)**
+11. **Context API (`createContext` vs `provide/inject`)**
+12. **Advanced Vue Features (`KeepAlive`, `Transition`, `v-memo`, and Scoped Slots)**
 
 ## 🏗️ Project Structure Decisions
 

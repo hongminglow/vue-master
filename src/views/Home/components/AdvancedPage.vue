@@ -235,9 +235,18 @@
 						Incredible for multi-step wizards or tab-based routing without complex global state!
 					</p>
 
-					<div class="bg-slate-900 rounded-lg p-4 font-mono text-sm border border-slate-700/80 shadow-inner">
-						<span class="text-blue-400">let</span> formDraft = ref(<span class="text-green-300">""</span>); <br />
-						<span class="text-slate-500">// Preserved magically when swapping tabs</span>
+					<div
+						class="bg-slate-900 rounded-lg p-4 font-mono text-sm border border-slate-700/80 shadow-inner overflow-x-auto leading-relaxed text-slate-300"
+					>
+						<span class="text-blue-300">&lt;KeepAlive&gt;</span><br />
+						&nbsp;&nbsp;<span class="text-slate-400 italic">&lt;!-- State is cached when activeTab changes! --&gt;</span
+						><br />
+						&nbsp;&nbsp;<span class="text-blue-300">&lt;component</span> <span class="text-purple-300">:is</span>=<span
+							class="text-green-300"
+							>"activeTab"</span
+						>
+						<span class="text-blue-300">/&gt;</span><br />
+						<span class="text-blue-300">&lt;/KeepAlive&gt;</span>
 					</div>
 				</div>
 
