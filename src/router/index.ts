@@ -71,6 +71,11 @@ const routes: RouteRecordRaw[] = [
 				component: () => import("@/views/Home/components/EventHandlerPage.vue"),
 			},
 			{
+				path: "lifecycle",
+				name: "Lifecycle",
+				component: () => import("@/views/Home/components/LifecyclePage.vue"),
+			},
+			{
 				path: "advanced",
 				name: "AdvancedFeatures",
 				component: () => import("@/views/Home/components/AdvancedPage.vue"),

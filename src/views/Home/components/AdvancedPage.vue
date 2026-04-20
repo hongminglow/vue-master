@@ -318,24 +318,24 @@
 						class="bg-slate-900/50 rounded-lg p-4 font-mono text-sm border border-slate-700/80 shadow-inner overflow-x-auto leading-relaxed"
 					>
 						<span class="text-slate-400 italic">// ❌ Reactivity DESTROYED for both!</span><br />
-						<span class="text-blue-300 font-medium">const</span> <span class="text-slate-200">{ count } =</span>
+						<span class="text-blue-300 font-medium">const</span> <span class="text-slate-200">{ count } =&nbsp;</span>
 						<span class="text-green-300 font-medium">reactive</span><span class="text-slate-200">({ count: 0 });</span
 						><br />
-						<span class="text-blue-300 font-medium">const</span> <span class="text-slate-200">{ age } =</span>
+						<span class="text-blue-300 font-medium">const</span> <span class="text-slate-200">{ age } =&nbsp;</span>
 						<span class="text-green-300 font-medium">ref</span><span class="text-slate-200">({ age: 25 }).value;</span
 						><br /><br />
 
 						<span class="text-slate-400 italic">// ✅ toRefs keeps reactivity intact by creating</span><br />
 						<span class="text-slate-400 italic">// individual ref() proxies for each property!</span><br />
-						<span class="text-blue-300 font-medium">const</span> <span class="text-slate-200">state =</span>
+						<span class="text-blue-300 font-medium">const</span> <span class="text-slate-200">state =&nbsp;</span>
 						<span class="text-green-300 font-medium">reactive</span><span class="text-slate-200">({ count: 0 });</span
 						><br />
-						<span class="text-blue-300 font-medium">const</span> <span class="text-slate-200">{ count } =</span>
+						<span class="text-blue-300 font-medium">const</span> <span class="text-slate-200">{ count } =&nbsp;</span>
 						<span class="text-white font-bold">toRefs</span><span class="text-slate-200">(state);</span><br /><br />
 
-						<span class="text-blue-300 font-medium">const</span> <span class="text-slate-200">user =</span>
+						<span class="text-blue-300 font-medium">const</span> <span class="text-slate-200">user =&nbsp;</span>
 						<span class="text-green-300 font-medium">ref</span><span class="text-slate-200">({ age: 25 });</span><br />
-						<span class="text-blue-300 font-medium">const</span> <span class="text-slate-200">{ age } =</span>
+						<span class="text-blue-300 font-medium">const</span> <span class="text-slate-200">{ age } =&nbsp;</span>
 						<span class="text-white font-bold">toRefs</span><span class="text-slate-200">(user.value);</span>
 					</div>
 				</div>

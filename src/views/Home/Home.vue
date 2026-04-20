@@ -98,6 +98,7 @@ const sidebarRoutes = [
 	{ path: "/home/condition", name: "Conditionals (v-if)", icon: "🛣️" },
 	{ path: "/home/event-handler", name: "Event Handler (onClick)", icon: "🎯" },
 	{ path: "/home/context", name: "Provide/Inject (Context)", icon: "💉" },
+	{ path: "/home/lifecycle", name: "Lifecycle Hooks", icon: "🌱" },
 	{ path: "/home/advanced", name: "Advanced (KeepAlive, etc.)", icon: "🔬" },
 ];
 
