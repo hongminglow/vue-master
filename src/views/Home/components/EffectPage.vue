@@ -202,9 +202,10 @@
 						<span class="text-slate-300">&nbsp;&nbsp;{ flush: </span><span class="text-green-300">'post'</span><span class="text-slate-300"> })</span>
 					</div>
 					<p class="text-slate-300 text-sm leading-relaxed">
-						Runs <strong class="text-blue-300">after</strong> Vue has flushed and committed DOM updates. Inside
-						this callback, <code>templateRef.value</code> reflects the <em>freshly painted</em> DOM. This is
-						Vue's equivalent of React's <code>useLayoutEffect</code>.
+						Runs <strong class="text-blue-300">after</strong> Vue has committed DOM updates — but still
+						<strong>before</strong> the browser repaints. Inside this callback,
+						<code>templateRef.value</code> reflects the <em>freshly committed</em> (not yet painted) DOM.
+						This makes it Vue's equivalent of React's <code>useLayoutEffect</code>, not <code>useEffect</code>.
 					</p>
 					<div class="space-y-2">
 						<p class="text-xs font-bold text-green-400 uppercase tracking-widest">✅ Pros</p>
@@ -217,8 +218,8 @@
 					<div class="space-y-2">
 						<p class="text-xs font-bold text-rose-400 uppercase tracking-widest">❌ Cons</p>
 						<ul class="text-xs text-slate-400 space-y-1 list-disc pl-4">
-							<li>Runs after paint — slight delay vs. <code>pre</code></li>
-							<li>Overkill if you don't actually need DOM access</li>
+							<li>Runs <em>after</em> Vue's DOM commit — <strong>not</strong> after browser paint (still blocks repaint like <code>useLayoutEffect</code>)</li>
+							<li>Overkill if you don't actually need fresh DOM measurements</li>
 						</ul>
 					</div>
 				</div>
@@ -264,32 +265,41 @@
 						</tr>
 						<tr class="hover:bg-slate-800/30 transition-colors">
 							<td class="px-5 py-3.5 text-slate-400 font-medium">DOM access safe?</td>
-							<td class="px-5 py-3.5"><span class="text-rose-400 font-bold">❌ Stale DOM</span></td>
-							<td class="px-5 py-3.5"><span class="text-rose-400 font-bold">❌ Stale DOM</span></td>
-							<td class="px-5 py-3.5"><span class="text-green-400 font-bold">✅ Fresh DOM</span></td>
+							<td class="px-5 py-3.5 text-slate-300">❌ Stale DOM</td>
+							<td class="px-5 py-3.5 text-slate-300">❌ Stale DOM</td>
+							<td class="px-5 py-3.5 text-slate-300">✅ Fresh DOM</td>
 						</tr>
 						<tr class="hover:bg-slate-800/30 transition-colors">
 							<td class="px-5 py-3.5 text-slate-400 font-medium">Batched?</td>
-							<td class="px-5 py-3.5"><span class="text-green-400 font-bold">✅ Yes</span></td>
-							<td class="px-5 py-3.5"><span class="text-rose-400 font-bold">❌ No (1 per mutation)</span></td>
-							<td class="px-5 py-3.5"><span class="text-green-400 font-bold">✅ Yes</span></td>
+							<td class="px-5 py-3.5 text-slate-300">✅ Yes</td>
+							<td class="px-5 py-3.5 text-slate-300">❌ No (1 per mutation)</td>
+							<td class="px-5 py-3.5 text-slate-300">✅ Yes</td>
 						</tr>
 						<tr class="hover:bg-slate-800/30 transition-colors">
 							<td class="px-5 py-3.5 text-slate-400 font-medium">Runs on mount?</td>
-							<td class="px-5 py-3.5"><span class="text-green-400 font-bold">✅ Eager</span></td>
-							<td class="px-5 py-3.5"><span class="text-green-400 font-bold">✅ Eager</span></td>
-							<td class="px-5 py-3.5"><span class="text-green-400 font-bold">✅ Eager</span></td>
+							<td class="px-5 py-3.5 text-slate-300">✅ Eager</td>
+							<td class="px-5 py-3.5 text-slate-300">✅ Eager</td>
+							<td class="px-5 py-3.5 text-slate-300">✅ Eager</td>
 						</tr>
 						<tr class="hover:bg-slate-800/30 transition-colors">
 							<td class="px-5 py-3.5 text-slate-400 font-medium">React equivalent</td>
-							<td class="px-5 py-3.5 font-mono text-[#61DAFB] text-xs">useEffect (with deps)</td>
-							<td class="px-5 py-3.5 font-mono text-[#61DAFB] text-xs">— (no direct equiv.)</td>
-							<td class="px-5 py-3.5 font-mono text-[#61DAFB] text-xs">useLayoutEffect</td>
+							<td class="px-5 py-3.5 text-xs">
+								<span class="font-mono text-[#61DAFB]">useEffect</span>
+								<span class="block text-slate-500 mt-0.5">(closest — but useEffect runs after browser paint, pre runs before Vue renders)</span>
+							</td>
+							<td class="px-5 py-3.5 text-xs">
+								<span class="font-mono text-[#61DAFB]">flushSync()</span>
+								<span class="block text-slate-500 mt-0.5">(both force sync, unbatched execution)</span>
+							</td>
+							<td class="px-5 py-3.5 text-xs">
+								<span class="font-mono text-[#61DAFB]">useLayoutEffect</span>
+								<span class="block text-slate-500 mt-0.5">(both run after DOM commit, before browser repaint)</span>
+							</td>
 						</tr>
 						<tr class="hover:bg-slate-800/30 transition-colors">
 							<td class="px-5 py-3.5 text-slate-400 font-medium">Performance risk</td>
 							<td class="px-5 py-3.5 text-slate-300">Low</td>
-							<td class="px-5 py-3.5"><span class="text-rose-400 font-bold">High (no batching!)</span></td>
+							<td class="px-5 py-3.5 text-slate-300">High (no batching!)</td>
 							<td class="px-5 py-3.5 text-slate-300">Low</td>
 						</tr>
 					</tbody>
